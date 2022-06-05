@@ -1,0 +1,35 @@
+﻿@model Hostel_MVC.Check_in
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Check_in</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Booking.Resident_passport)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Booking.Resident_passport)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resident.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resident.surname)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCheck_in }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

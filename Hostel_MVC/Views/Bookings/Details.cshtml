@@ -1,0 +1,59 @@
+﻿@model Hostel_MVC.Booking
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Booking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateIn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateIn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateOut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateOut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resident.surname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resident.surname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Room.roomStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Room.roomStatus)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idBooking }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

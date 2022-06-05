@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище HostelModelContainer" CdmEntityContainer="HostelEntities">
+    <EntitySetMapping Name="Booking">
+      <EntityTypeMapping TypeName="HostelModel.Booking">
+        <MappingFragment StoreEntitySet="Booking">
+          <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+          <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+          <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Check_in">
+      <EntityTypeMapping TypeName="HostelModel.Check_in">
+        <MappingFragment StoreEntitySet="Check_in">
+          <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+          <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Resident">
+      <EntityTypeMapping TypeName="HostelModel.Resident">
+        <MappingFragment StoreEntitySet="Resident">
+          <ScalarProperty Name="passport" ColumnName="passport" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Room">
+      <EntityTypeMapping TypeName="HostelModel.Room">
+        <MappingFragment StoreEntitySet="Room">
+          <ScalarProperty Name="roomNum" ColumnName="roomNum" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="roomStatus" ColumnName="roomStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="add_Booking" FunctionName="Хранилище HostelModel.add_Booking" />
+    <FunctionImportMapping FunctionImportName="add_Check_in" FunctionName="Хранилище HostelModel.add_Check_in" />
+    <FunctionImportMapping FunctionImportName="add_Resident" FunctionName="Хранилище HostelModel.add_Resident" />
+    <FunctionImportMapping FunctionImportName="add_Room" FunctionName="Хранилище HostelModel.add_Room" />
+    <FunctionImportMapping FunctionImportName="del_Booking" FunctionName="Хранилище HostelModel.del_Booking" />
+    <FunctionImportMapping FunctionImportName="del_Check_in" FunctionName="Хранилище HostelModel.del_Check_in" />
+    <FunctionImportMapping FunctionImportName="del_Resident" FunctionName="Хранилище HostelModel.del_Resident" />
+    <FunctionImportMapping FunctionImportName="del_Room" FunctionName="Хранилище HostelModel.del_Room" />
+    <FunctionImportMapping FunctionImportName="gen_Booking" FunctionName="Хранилище HostelModel.gen_Booking" />
+    <FunctionImportMapping FunctionImportName="gen_Check_In" FunctionName="Хранилище HostelModel.gen_Check_In">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.gen_Check_In_Result">
+          <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+          <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="gen_Resident" FunctionName="Хранилище HostelModel.gen_Resident" />
+    <FunctionImportMapping FunctionImportName="gen_Room" FunctionName="Хранилище HostelModel.gen_Room" />
+    <FunctionImportMapping FunctionImportName="Procedure1" FunctionName="Хранилище HostelModel.Procedure1">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.Procedure1_Result">
+          <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+          <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+          <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="Procedure2" FunctionName="Хранилище HostelModel.Procedure2">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.Procedure2_Result">
+          <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+          <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+          <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sel_Booking" FunctionName="Хранилище HostelModel.sel_Booking">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.sel_Booking_Result">
+          <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+          <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+          <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sel_Check_in" FunctionName="Хранилище HostelModel.sel_Check_in">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.sel_Check_in_Result">
+          <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+          <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+          <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sel_Resident" FunctionName="Хранилище HostelModel.sel_Resident">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.sel_Resident_Result">
+          <ScalarProperty Name="passport" ColumnName="passport" />
+          <ScalarProperty Name="surname" ColumnName="surname" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sel_Room" FunctionName="Хранилище HostelModel.sel_Room">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="HostelModel.sel_Room_Result">
+          <ScalarProperty Name="roomNum" ColumnName="roomNum" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="roomStatus" ColumnName="roomStatus" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="update_Booking" FunctionName="Хранилище HostelModel.update_Booking" />
+    <FunctionImportMapping FunctionImportName="update_Check_in" FunctionName="Хранилище HostelModel.update_Check_in" />
+    <FunctionImportMapping FunctionImportName="update_Resident" FunctionName="Хранилище HostelModel.update_Resident" />
+    <FunctionImportMapping FunctionImportName="update_Room" FunctionName="Хранилище HostelModel.update_Room" />
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище HostelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="idBooking" />
+    </Key>
+    <Property Name="idBooking" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Resident_passport" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Room_roomNum" Type="int" Nullable="false" />
+    <Property Name="count" Type="tinyint" Nullable="false" />
+    <Property Name="dateIn" Type="date" Nullable="false" />
+    <Property Name="dateOut" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Check_in">
+    <Key>
+      <PropertyRef Name="IdCheck_in" />
+    </Key>
+    <Property Name="IdCheck_in" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Booking_idBooking" Type="int" Nullable="false" />
+    <Property Name="Resident_passport" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Resident">
+    <Key>
+      <PropertyRef Name="passport" />
+    </Key>
+    <Property Name="passport" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="patronymic" Type="varchar" MaxLength="45" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="roomNum" />
+    </Key>
+    <Property Name="roomNum" Type="int" Nullable="false" />
+    <Property Name="count" Type="tinyint" Nullable="false" />
+    <Property Name="roomStatus" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Booking__Residen__74794A92">
+    <End Role="Resident" Type="Self.Resident" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resident">
+        <PropertyRef Name="passport" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Resident_passport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Booking__Room_ro__756D6ECB">
+    <End Role="Room" Type="Self.Room" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="roomNum" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="Room_roomNum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Check_in__Bookin__0F2D40CE">
+    <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+    <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Booking">
+        <PropertyRef Name="idBooking" />
+      </Principal>
+      <Dependent Role="Check_in">
+        <PropertyRef Name="Booking_idBooking" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Check_in__Reside__1C873BEC">
+    <End Role="Resident" Type="Self.Resident" Multiplicity="1" />
+    <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Resident">
+        <PropertyRef Name="passport" />
+      </Principal>
+      <Dependent Role="Check_in">
+        <PropertyRef Name="Resident_passport" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="add_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+    <Parameter Name="Room_roomNum" Type="int" Mode="In" />
+    <Parameter Name="count" Type="tinyint" Mode="In" />
+    <Parameter Name="dateIn" Type="date" Mode="In" />
+    <Parameter Name="dateOut" Type="date" Mode="In" />
+  </Function>
+  <Function Name="add_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="Booking_idBooking" Type="int" Mode="In" />
+    <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="add_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="passport" Type="varchar" Mode="In" />
+    <Parameter Name="surname" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="patronymic" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="add_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roomNum" Type="int" Mode="In" />
+    <Parameter Name="count" Type="tinyint" Mode="In" />
+    <Parameter Name="roomStatus" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="del_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idBooking" Type="int" Mode="In" />
+  </Function>
+  <Function Name="del_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idCheck_in" Type="bigint" Mode="In" />
+  </Function>
+  <Function Name="del_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="passport" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="del_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roomNum" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="gen_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count1" Type="int" Mode="In" />
+  </Function>
+  <Function Name="gen_Check_In" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count1" Type="int" Mode="In" />
+  </Function>
+  <Function Name="gen_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count" Type="int" Mode="In" />
+  </Function>
+  <Function Name="gen_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="count1" Type="int" Mode="In" />
+  </Function>
+  <Function Name="Procedure1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="date" Type="date" Mode="In" />
+  </Function>
+  <Function Name="Procedure2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="dateIn" Type="date" Mode="In" />
+    <Parameter Name="dateOut" Type="date" Mode="In" />
+  </Function>
+  <Function Name="sel_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idBooking" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sel_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCheck_in" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sel_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="passport" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sel_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roomNum" Type="int" Mode="In" />
+  </Function>
+  <Function Name="update_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idBooking" Type="int" Mode="In" />
+    <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+    <Parameter Name="Room_roomNum" Type="int" Mode="In" />
+    <Parameter Name="count" Type="tinyint" Mode="In" />
+    <Parameter Name="dateIn" Type="date" Mode="In" />
+    <Parameter Name="dateOut" Type="date" Mode="In" />
+  </Function>
+  <Function Name="update_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="IdCheck_in" Type="bigint" Mode="In" />
+    <Parameter Name="Booking_idBooking" Type="int" Mode="In" />
+    <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="update_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="passport" Type="varchar" Mode="In" />
+    <Parameter Name="surname" Type="varchar" Mode="In" />
+    <Parameter Name="name" Type="varchar" Mode="In" />
+    <Parameter Name="patronymic" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="update_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="roomNum" Type="int" Mode="In" />
+    <Parameter Name="count" Type="tinyint" Mode="In" />
+    <Parameter Name="roomStatus" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="Хранилище HostelModelContainer">
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Check_in" EntityType="Self.Check_in" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Resident" EntityType="Self.Resident" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Booking__Residen__74794A92" Association="Self.FK__Booking__Residen__74794A92">
+      <End Role="Resident" EntitySet="Resident" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Booking__Room_ro__756D6ECB" Association="Self.FK__Booking__Room_ro__756D6ECB">
+      <End Role="Room" EntitySet="Room" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Check_in__Bookin__0F2D40CE" Association="Self.FK__Check_in__Bookin__0F2D40CE">
+      <End Role="Booking" EntitySet="Booking" />
+      <End Role="Check_in" EntitySet="Check_in" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Check_in__Reside__1C873BEC" Association="Self.FK__Check_in__Reside__1C873BEC">
+      <End Role="Resident" EntitySet="Resident" />
+      <End Role="Check_in" EntitySet="Check_in" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

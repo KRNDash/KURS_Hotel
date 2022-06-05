@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Hostel_MVC.Check_in>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Booking.Resident_passport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resident.surname)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Booking.Resident_passport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resident.surname)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdCheck_in }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdCheck_in }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdCheck_in })
+        </td>
+    </tr>
+}
+
+</table>

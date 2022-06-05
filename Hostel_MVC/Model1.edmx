@@ -1,0 +1,622 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище HostelModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="idBooking" />
+          </Key>
+          <Property Name="idBooking" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Resident_passport" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Room_roomNum" Type="int" Nullable="false" />
+          <Property Name="count" Type="tinyint" Nullable="false" />
+          <Property Name="dateIn" Type="date" Nullable="false" />
+          <Property Name="dateOut" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Check_in">
+          <Key>
+            <PropertyRef Name="IdCheck_in" />
+          </Key>
+          <Property Name="IdCheck_in" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Booking_idBooking" Type="int" Nullable="false" />
+          <Property Name="Resident_passport" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Resident">
+          <Key>
+            <PropertyRef Name="passport" />
+          </Key>
+          <Property Name="passport" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="surname" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="patronymic" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomNum" />
+          </Key>
+          <Property Name="roomNum" Type="int" Nullable="false" />
+          <Property Name="count" Type="tinyint" Nullable="false" />
+          <Property Name="roomStatus" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Booking__Residen__74794A92">
+          <End Role="Resident" Type="Self.Resident" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resident">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Resident_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Room_ro__756D6ECB">
+          <End Role="Room" Type="Self.Room" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomNum" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Room_roomNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Check_in__Bookin__0F2D40CE">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="idBooking" />
+            </Principal>
+            <Dependent Role="Check_in">
+              <PropertyRef Name="Booking_idBooking" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Check_in__Reside__1C873BEC">
+          <End Role="Resident" Type="Self.Resident" Multiplicity="1" />
+          <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resident">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Check_in">
+              <PropertyRef Name="Resident_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="add_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+          <Parameter Name="Room_roomNum" Type="int" Mode="In" />
+          <Parameter Name="count" Type="tinyint" Mode="In" />
+          <Parameter Name="dateIn" Type="date" Mode="In" />
+          <Parameter Name="dateOut" Type="date" Mode="In" />
+        </Function>
+        <Function Name="add_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Booking_idBooking" Type="int" Mode="In" />
+          <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="add_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="passport" Type="varchar" Mode="In" />
+          <Parameter Name="surname" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="patronymic" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="add_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roomNum" Type="int" Mode="In" />
+          <Parameter Name="count" Type="tinyint" Mode="In" />
+          <Parameter Name="roomStatus" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="del_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBooking" Type="int" Mode="In" />
+        </Function>
+        <Function Name="del_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idCheck_in" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="del_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="passport" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="del_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roomNum" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="gen_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count1" Type="int" Mode="In" />
+        </Function>
+        <Function Name="gen_Check_In" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count1" Type="int" Mode="In" />
+        </Function>
+        <Function Name="gen_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count" Type="int" Mode="In" />
+        </Function>
+        <Function Name="gen_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="count1" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Procedure1" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="Procedure2" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="dateIn" Type="date" Mode="In" />
+          <Parameter Name="dateOut" Type="date" Mode="In" />
+        </Function>
+        <Function Name="sel_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBooking" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sel_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCheck_in" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sel_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="passport" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sel_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roomNum" Type="int" Mode="In" />
+        </Function>
+        <Function Name="update_Booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idBooking" Type="int" Mode="In" />
+          <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+          <Parameter Name="Room_roomNum" Type="int" Mode="In" />
+          <Parameter Name="count" Type="tinyint" Mode="In" />
+          <Parameter Name="dateIn" Type="date" Mode="In" />
+          <Parameter Name="dateOut" Type="date" Mode="In" />
+        </Function>
+        <Function Name="update_Check_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdCheck_in" Type="bigint" Mode="In" />
+          <Parameter Name="Booking_idBooking" Type="int" Mode="In" />
+          <Parameter Name="Resident_passport" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="update_Resident" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="passport" Type="varchar" Mode="In" />
+          <Parameter Name="surname" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="patronymic" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="update_Room" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="roomNum" Type="int" Mode="In" />
+          <Parameter Name="count" Type="tinyint" Mode="In" />
+          <Parameter Name="roomStatus" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Хранилище HostelModelContainer">
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Check_in" EntityType="Self.Check_in" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resident" EntityType="Self.Resident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Booking__Residen__74794A92" Association="Self.FK__Booking__Residen__74794A92">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Room_ro__756D6ECB" Association="Self.FK__Booking__Room_ro__756D6ECB">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Check_in__Bookin__0F2D40CE" Association="Self.FK__Check_in__Bookin__0F2D40CE">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Check_in" EntitySet="Check_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Check_in__Reside__1C873BEC" Association="Self.FK__Check_in__Reside__1C873BEC">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="Check_in" EntitySet="Check_in" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="HostelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="idBooking" />
+          </Key>
+          <Property Name="idBooking" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Resident_passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Room_roomNum" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Byte" Nullable="false" />
+          <Property Name="dateIn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="dateOut" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Resident" Relationship="Self.FK__Booking__Residen__74794A92" FromRole="Booking" ToRole="Resident" />
+          <NavigationProperty Name="Room" Relationship="Self.FK__Booking__Room_ro__756D6ECB" FromRole="Booking" ToRole="Room" />
+          <NavigationProperty Name="Check_in" Relationship="Self.FK__Check_in__Bookin__0F2D40CE" FromRole="Booking" ToRole="Check_in" />
+        </EntityType>
+        <EntityType Name="Check_in">
+          <Key>
+            <PropertyRef Name="IdCheck_in" />
+          </Key>
+          <Property Name="IdCheck_in" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Booking_idBooking" Type="Int32" Nullable="false" />
+          <Property Name="Resident_passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__Check_in__Bookin__0F2D40CE" FromRole="Check_in" ToRole="Booking" />
+          <NavigationProperty Name="Resident" Relationship="Self.FK__Check_in__Reside__1C873BEC" FromRole="Check_in" ToRole="Resident" />
+        </EntityType>
+        <EntityType Name="Resident">
+          <Key>
+            <PropertyRef Name="passport" />
+          </Key>
+          <Property Name="passport" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="surname" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="patronymic" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__Booking__Residen__74794A92" FromRole="Resident" ToRole="Booking" />
+          <NavigationProperty Name="Check_in" Relationship="Self.FK__Check_in__Reside__1C873BEC" FromRole="Resident" ToRole="Check_in" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="roomNum" />
+          </Key>
+          <Property Name="roomNum" Type="Int32" Nullable="false" />
+          <Property Name="count" Type="Byte" Nullable="false" />
+          <Property Name="roomStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__Booking__Room_ro__756D6ECB" FromRole="Room" ToRole="Booking" />
+        </EntityType>
+        <Association Name="FK__Booking__Residen__74794A92">
+          <End Role="Resident" Type="Self.Resident" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resident">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Resident_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__Room_ro__756D6ECB">
+          <End Role="Room" Type="Self.Room" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Room">
+              <PropertyRef Name="roomNum" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Room_roomNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Check_in__Bookin__0F2D40CE">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="1" />
+          <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="idBooking" />
+            </Principal>
+            <Dependent Role="Check_in">
+              <PropertyRef Name="Booking_idBooking" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Check_in__Reside__1C873BEC">
+          <End Role="Resident" Type="Self.Resident" Multiplicity="1" />
+          <End Role="Check_in" Type="Self.Check_in" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resident">
+              <PropertyRef Name="passport" />
+            </Principal>
+            <Dependent Role="Check_in">
+              <PropertyRef Name="Resident_passport" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="HostelEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Booking" EntityType="Self.Booking" />
+          <EntitySet Name="Check_in" EntityType="Self.Check_in" />
+          <EntitySet Name="Resident" EntityType="Self.Resident" />
+          <EntitySet Name="Room" EntityType="Self.Room" />
+          <AssociationSet Name="FK__Booking__Residen__74794A92" Association="Self.FK__Booking__Residen__74794A92">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__Room_ro__756D6ECB" Association="Self.FK__Booking__Room_ro__756D6ECB">
+            <End Role="Room" EntitySet="Room" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Check_in__Bookin__0F2D40CE" Association="Self.FK__Check_in__Bookin__0F2D40CE">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Check_in" EntitySet="Check_in" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Check_in__Reside__1C873BEC" Association="Self.FK__Check_in__Reside__1C873BEC">
+            <End Role="Resident" EntitySet="Resident" />
+            <End Role="Check_in" EntitySet="Check_in" />
+          </AssociationSet>
+          <FunctionImport Name="add_Booking">
+            <Parameter Name="Resident_passport" Mode="In" Type="String" />
+            <Parameter Name="Room_roomNum" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Byte" />
+            <Parameter Name="dateIn" Mode="In" Type="DateTime" />
+            <Parameter Name="dateOut" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="add_Check_in">
+            <Parameter Name="Booking_idBooking" Mode="In" Type="Int32" />
+            <Parameter Name="Resident_passport" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="add_Resident">
+            <Parameter Name="passport" Mode="In" Type="String" />
+            <Parameter Name="surname" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="patronymic" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="add_Room">
+            <Parameter Name="roomNum" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Byte" />
+            <Parameter Name="roomStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="del_Booking">
+            <Parameter Name="idBooking" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="del_Check_in">
+            <Parameter Name="idCheck_in" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="del_Resident">
+            <Parameter Name="passport" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="del_Room">
+            <Parameter Name="roomNum" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="gen_Booking">
+            <Parameter Name="count1" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="gen_Check_In" ReturnType="Collection(HostelModel.gen_Check_In_Result)">
+            <Parameter Name="count1" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="gen_Resident">
+            <Parameter Name="count" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="gen_Room">
+            <Parameter Name="count1" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Procedure1" ReturnType="Collection(HostelModel.Procedure1_Result)">
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Procedure2" ReturnType="Collection(HostelModel.Procedure2_Result)">
+            <Parameter Name="dateIn" Mode="In" Type="DateTime" />
+            <Parameter Name="dateOut" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="sel_Booking" ReturnType="Collection(HostelModel.sel_Booking_Result)">
+            <Parameter Name="idBooking" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sel_Check_in" ReturnType="Collection(HostelModel.sel_Check_in_Result)">
+            <Parameter Name="IdCheck_in" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sel_Resident" ReturnType="Collection(HostelModel.sel_Resident_Result)">
+            <Parameter Name="passport" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sel_Room" ReturnType="Collection(HostelModel.sel_Room_Result)">
+            <Parameter Name="roomNum" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="update_Booking">
+            <Parameter Name="idBooking" Mode="In" Type="Int32" />
+            <Parameter Name="Resident_passport" Mode="In" Type="String" />
+            <Parameter Name="Room_roomNum" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Byte" />
+            <Parameter Name="dateIn" Mode="In" Type="DateTime" />
+            <Parameter Name="dateOut" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="update_Check_in">
+            <Parameter Name="IdCheck_in" Mode="In" Type="Int64" />
+            <Parameter Name="Booking_idBooking" Mode="In" Type="Int32" />
+            <Parameter Name="Resident_passport" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="update_Resident">
+            <Parameter Name="passport" Mode="In" Type="String" />
+            <Parameter Name="surname" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="patronymic" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="update_Room">
+            <Parameter Name="roomNum" Mode="In" Type="Int32" />
+            <Parameter Name="count" Mode="In" Type="Byte" />
+            <Parameter Name="roomStatus" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="gen_Check_In_Result">
+          <Property Type="Int64" Name="IdCheck_in" Nullable="false" />
+          <Property Type="Int32" Name="Booking_idBooking" Nullable="false" />
+          <Property Type="String" Name="Resident_passport" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="Procedure1_Result">
+          <Property Type="Int32" Name="idBooking" Nullable="false" />
+          <Property Type="Int32" Name="Room_roomNum" Nullable="false" />
+          <Property Type="String" Name="Resident_passport" Nullable="false" MaxLength="20" />
+          <Property Type="Byte" Name="count" Nullable="false" />
+          <Property Type="DateTime" Name="dateIn" Nullable="false" />
+          <Property Type="DateTime" Name="dateOut" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Procedure2_Result">
+          <Property Type="Int32" Name="Room_roomNum" Nullable="false" />
+          <Property Type="String" Name="Resident_passport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="patronymic" Nullable="true" MaxLength="45" />
+          <Property Type="DateTime" Name="dateIn" Nullable="false" />
+          <Property Type="DateTime" Name="dateOut" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sel_Booking_Result">
+          <Property Type="Int32" Name="idBooking" Nullable="false" />
+          <Property Type="String" Name="Resident_passport" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="Room_roomNum" Nullable="false" />
+          <Property Type="Byte" Name="count" Nullable="false" />
+          <Property Type="DateTime" Name="dateIn" Nullable="false" />
+          <Property Type="DateTime" Name="dateOut" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sel_Check_in_Result">
+          <Property Type="Int64" Name="IdCheck_in" Nullable="false" />
+          <Property Type="Int32" Name="Booking_idBooking" Nullable="false" />
+          <Property Type="String" Name="Resident_passport" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="sel_Resident_Result">
+          <Property Type="String" Name="passport" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="surname" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="patronymic" Nullable="true" MaxLength="45" />
+        </ComplexType>
+        <ComplexType Name="sel_Room_Result">
+          <Property Type="Int32" Name="roomNum" Nullable="false" />
+          <Property Type="Byte" Name="count" Nullable="false" />
+          <Property Type="String" Name="roomStatus" Nullable="false" MaxLength="20" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище HostelModelContainer" CdmEntityContainer="HostelEntities">
+          <EntitySetMapping Name="Booking">
+            <EntityTypeMapping TypeName="HostelModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+                <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+                <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Check_in">
+            <EntityTypeMapping TypeName="HostelModel.Check_in">
+              <MappingFragment StoreEntitySet="Check_in">
+                <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+                <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resident">
+            <EntityTypeMapping TypeName="HostelModel.Resident">
+              <MappingFragment StoreEntitySet="Resident">
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Room">
+            <EntityTypeMapping TypeName="HostelModel.Room">
+              <MappingFragment StoreEntitySet="Room">
+                <ScalarProperty Name="roomNum" ColumnName="roomNum" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="roomStatus" ColumnName="roomStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="add_Booking" FunctionName="Хранилище HostelModel.add_Booking" />
+          <FunctionImportMapping FunctionImportName="add_Check_in" FunctionName="Хранилище HostelModel.add_Check_in" />
+          <FunctionImportMapping FunctionImportName="add_Resident" FunctionName="Хранилище HostelModel.add_Resident" />
+          <FunctionImportMapping FunctionImportName="add_Room" FunctionName="Хранилище HostelModel.add_Room" />
+          <FunctionImportMapping FunctionImportName="del_Booking" FunctionName="Хранилище HostelModel.del_Booking" />
+          <FunctionImportMapping FunctionImportName="del_Check_in" FunctionName="Хранилище HostelModel.del_Check_in" />
+          <FunctionImportMapping FunctionImportName="del_Resident" FunctionName="Хранилище HostelModel.del_Resident" />
+          <FunctionImportMapping FunctionImportName="del_Room" FunctionName="Хранилище HostelModel.del_Room" />
+          <FunctionImportMapping FunctionImportName="gen_Booking" FunctionName="Хранилище HostelModel.gen_Booking" />
+          <FunctionImportMapping FunctionImportName="gen_Check_In" FunctionName="Хранилище HostelModel.gen_Check_In">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.gen_Check_In_Result">
+                <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+                <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="gen_Resident" FunctionName="Хранилище HostelModel.gen_Resident" />
+          <FunctionImportMapping FunctionImportName="gen_Room" FunctionName="Хранилище HostelModel.gen_Room" />
+          <FunctionImportMapping FunctionImportName="Procedure1" FunctionName="Хранилище HostelModel.Procedure1">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.Procedure1_Result">
+                <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+                <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+                <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Procedure2" FunctionName="Хранилище HostelModel.Procedure2">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.Procedure2_Result">
+                <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+                <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+                <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sel_Booking" FunctionName="Хранилище HostelModel.sel_Booking">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.sel_Booking_Result">
+                <ScalarProperty Name="idBooking" ColumnName="idBooking" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+                <ScalarProperty Name="Room_roomNum" ColumnName="Room_roomNum" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="dateIn" ColumnName="dateIn" />
+                <ScalarProperty Name="dateOut" ColumnName="dateOut" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sel_Check_in" FunctionName="Хранилище HostelModel.sel_Check_in">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.sel_Check_in_Result">
+                <ScalarProperty Name="IdCheck_in" ColumnName="IdCheck_in" />
+                <ScalarProperty Name="Booking_idBooking" ColumnName="Booking_idBooking" />
+                <ScalarProperty Name="Resident_passport" ColumnName="Resident_passport" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sel_Resident" FunctionName="Хранилище HostelModel.sel_Resident">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.sel_Resident_Result">
+                <ScalarProperty Name="passport" ColumnName="passport" />
+                <ScalarProperty Name="surname" ColumnName="surname" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sel_Room" FunctionName="Хранилище HostelModel.sel_Room">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="HostelModel.sel_Room_Result">
+                <ScalarProperty Name="roomNum" ColumnName="roomNum" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="roomStatus" ColumnName="roomStatus" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="update_Booking" FunctionName="Хранилище HostelModel.update_Booking" />
+          <FunctionImportMapping FunctionImportName="update_Check_in" FunctionName="Хранилище HostelModel.update_Check_in" />
+          <FunctionImportMapping FunctionImportName="update_Resident" FunctionName="Хранилище HostelModel.update_Resident" />
+          <FunctionImportMapping FunctionImportName="update_Room" FunctionName="Хранилище HostelModel.update_Room" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
